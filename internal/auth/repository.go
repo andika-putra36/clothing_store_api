@@ -5,7 +5,7 @@ import "gorm.io/gorm"
 type Repository interface {
 	GetLoginCredentials(input LoginRequest) (GetLoginCredentialResponse, error)
 	SaveRefreshToken(input SaveRefreshTokenRequest) error
-	GetRefreshTokenResponse(refreshToken string) (GetRefreshTokenResponse, error)
+	GetRefreshToken(refreshToken string) (GetRefreshTokenResponse, error)
 	DeleteRefreshToken(userID int) error
 }
 

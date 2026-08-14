@@ -12,3 +12,7 @@ type SaveRefreshTokenRequest struct {
 	Token     string    `json:"token"`
 	ExpiredAt time.Time `json:"expired_at"`
 }
+
+type RefreshTokenRequest struct {
+	RefreshToken string `json:"refresh_token"`
+}

@@ -64,3 +64,16 @@ func (s *service) LogIn(input LoginRequest) (LoginResponse, error) {
 		},
 	}, nil
 }
+
+// func (s *service) RefreshToken(input RefreshTokenRequest) (RefreshTokenResponse, error) {
+// 	tokenData, err := s.repository.GetRefreshToken(input.RefreshToken)
+// 	if err != nil {
+// 		return RefreshTokenResponse{}, err
+// 	}
+
+// 	if time.Now().UTC().After(tokenData.ExpiredAt) {
+// 		return RefreshTokenResponse{}, errors.New("Refresh token expired")
+// 	}
+
+// 	//
+// }
