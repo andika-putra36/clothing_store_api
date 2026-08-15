@@ -3,6 +3,8 @@ package auth
 import (
 	"clothing_store_api/pkg/bcrypt"
 	"clothing_store_api/pkg/jwt"
+	"errors"
+	"time"
 )
 
 type Service interface {
@@ -65,15 +67,42 @@ func (s *service) LogIn(input LoginRequest) (LoginResponse, error) {
 	}, nil
 }
 
-// func (s *service) RefreshToken(input RefreshTokenRequest) (RefreshTokenResponse, error) {
-// 	tokenData, err := s.repository.GetRefreshToken(input.RefreshToken)
-// 	if err != nil {
-// 		return RefreshTokenResponse{}, err
-// 	}
+func (s *service) RefreshToken(input RefreshTokenRequest) (RefreshTokenResponse, error) {
+	tokenData, err := s.repository.GetRefreshToken(input.RefreshToken)
+	if err != nil {
+		return RefreshTokenResponse{}, err
+	}
 
-// 	if time.Now().UTC().After(tokenData.ExpiredAt) {
-// 		return RefreshTokenResponse{}, errors.New("Refresh token expired")
-// 	}
+	if time.Now().UTC().After(tokenData.ExpiredAt) {
+		return RefreshTokenResponse{}, errors.New("Refresh token expired")
+	}
 
-// 	//
-// }
+	accessToken, err := jwt.GenerateAccessToken(tokenData.UserID, tokenData.Email, tokenData.RoleID)
+	if err != nil {
+		return RefreshTokenResponse{}, err
+	}
+
+	newRefreshToken, expiredAt, err := jwt.GenerateRefreshToken()
+	if err != nil {
+		return RefreshTokenResponse{}, err
+	}
+
+	err = s.repository.DeleteRefreshToken(tokenData.UserID)
+	if err != nil {
+		return RefreshTokenResponse{}, err
+	}
+
+	err = s.repository.SaveRefreshToken(SaveRefreshTokenRequest{
+		UserID:    tokenData.UserID,
+		Token:     newRefreshToken,
+		ExpiredAt: expiredAt,
+	})
+	if err != nil {
+		return RefreshTokenResponse{}, err
+	}
+
+	return RefreshTokenResponse{
+		AccessToken:  accessToken,
+		RefreshToken: newRefreshToken,
+	}, nil
+}
