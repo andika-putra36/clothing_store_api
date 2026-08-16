@@ -38,3 +38,7 @@ type User struct {
 	RoleID int    `json:"role_id"`
 	Email  string `json:"email"`
 }
+
+type RegisterCustomerResponse struct {
+	Message string `json:"message"`
+}

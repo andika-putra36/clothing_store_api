@@ -7,6 +7,7 @@ type Repository interface {
 	SaveRefreshToken(input SaveRefreshTokenRequest) error
 	GetRefreshToken(refreshToken string) (GetRefreshTokenResponse, error)
 	DeleteRefreshToken(userID int) error
+	RegisterCustomer(input RegisterCustomerRequest) error
 }
 
 type repository struct {
@@ -60,6 +61,21 @@ func (r *repository) DeleteRefreshToken(userID int) error {
 	err := r.db.Exec(
 		`CALL delete_refresh_token(?)`,
 		userID,
+	).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (r *repository) RegisterCustomer(input RegisterCustomerRequest) error {
+	err := r.db.Exec(
+		`CALL register_customer(?, ?, ?, ?, ?)`,
+		input.Email,
+		input.Password,
+		input.FirstName,
+		input.LastName,
+		input.PhoneNumber,
 	).Error
 	if err != nil {
 		return err

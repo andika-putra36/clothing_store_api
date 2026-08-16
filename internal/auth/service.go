@@ -113,3 +113,5 @@ func (s *service) RefreshToken(input RefreshTokenRequest) (RefreshTokenResponse,
 		RefreshToken: newRefreshToken,
 	}, nil
 }
+
+func (s *service) RegisterCustomer(input RegisterCustomerRequest)
