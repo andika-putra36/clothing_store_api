@@ -1,8 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"clothing_store_api/internal/config"
+)
 
 func main() {
-	fmt.Println("test")
+	router := config.InitializeEverything()
+	router.Run(":8888")
 }
-

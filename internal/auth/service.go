@@ -8,6 +8,8 @@ import (
 )
 
 type Service interface {
+	LogIn(input LoginRequest) (LoginResponse, error)
+	RefreshToken(input RefreshTokenRequest) (RefreshTokenResponse, error)
 }
 
 type service struct {
@@ -63,6 +65,11 @@ func (s *service) LogIn(input LoginRequest) (LoginResponse, error) {
 		Token: Token{
 			AccessToken:  accessToken,
 			RefreshToken: refreshToken,
+		},
+		User: User{
+			UserID: loginCredential.UserID,
+			RoleID: loginCredential.RoleID,
+			Email:  loginCredential.Email,
 		},
 	}, nil
 }

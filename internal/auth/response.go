@@ -20,6 +20,7 @@ type GetRefreshTokenResponse struct {
 
 type LoginResponse struct {
 	Token Token `json:"token"`
+	User  User  `json:"user"`
 }
 
 type Token struct {
@@ -30,4 +31,10 @@ type Token struct {
 type RefreshTokenResponse struct {
 	AccessToken  string `json:"access_token"`
 	RefreshToken string `json:"refresh_token"`
+}
+
+type User struct {
+	UserID int    `json:"user_id"`
+	RoleID int    `json:"role_id"`
+	Email  string `json:"email"`
 }
