@@ -1,7 +1,7 @@
 
 CREATE TABLE users(
 	id SERIAL PRIMARY KEY
-	, role_id INT NOT NULL REFERENCES roles(id)
+	, role_id INT NOT NULL UNIQUE REFERENCES roles(id)
 	, email VARCHAR(255) NOT NULL
 	, password_hash TEXT NOT NULL
 	, is_active BOOLEAN DEFAULT TRUE
