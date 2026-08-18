@@ -85,3 +85,27 @@ func (h *handler) RegisterCustomer(c *gin.Context) {
 		"data": response,
 	})
 }
+
+func (h *handler) RegisterAdmin(c *gin.Context) {
+	var input RegisterAdminRequest
+
+	err := c.ShouldBindJSON(&input)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "request body is required",
+		})
+		return
+	}
+
+	response, err := h.service.RegisterAdmin(input)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"data": response,
+	})
+}

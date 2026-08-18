@@ -23,7 +23,8 @@ BEGIN
 	VALUES(
 		3
 		, p_email
-		, p_password_hash)
+		, p_password_hash
+	)
 	RETURNING id INTO v_user_id;
 
 	INSERT INTO customers(user_id, first_name, last_name, phone_number)

@@ -42,3 +42,7 @@ type User struct {
 type RegisterCustomerResponse struct {
 	Message string `json:"message"`
 }
+
+type RegisterAdminResponse struct {
+	Message string `json:"message"`
+}

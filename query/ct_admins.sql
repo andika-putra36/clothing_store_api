@@ -1,10 +1,9 @@
-CREATE TABLE customers(
+CREATE TABLE admins(
 	id SERIAL PRIMARY KEY
 	, user_id INT NOT NULL UNIQUE REFERENCES users(id)
 	, first_name VARCHAR(255) NOT NULL
 	, last_name VARCHAR(255) NOT NULL
 	, phone_number VARCHAR(255) NOT NULL
-	, balance NUMERIC (12,2) NOT NULL DEFAULT 0
 	, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 	, updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 )

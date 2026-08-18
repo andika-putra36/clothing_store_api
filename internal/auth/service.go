@@ -11,6 +11,7 @@ type Service interface {
 	LogIn(input LoginRequest) (LoginResponse, error)
 	RefreshToken(input RefreshTokenRequest) (RefreshTokenResponse, error)
 	RegisterCustomer(input RegisterCustomerRequest) (RegisterCustomerResponse, error)
+	RegisterAdmin(input RegisterAdminRequest) (RegisterAdminResponse, error)
 }
 
 type service struct {
@@ -129,5 +130,22 @@ func (s *service) RegisterCustomer(input RegisterCustomerRequest) (RegisterCusto
 
 	return RegisterCustomerResponse{
 		Message: "Customer registered successfully",
+	}, nil
+}
+
+func (s *service) RegisterAdmin(input RegisterAdminRequest) (RegisterAdminResponse, error) {
+	hashedPassword, err := bcrypt.HashPassword(input.Password)
+	if err != nil {
+		return RegisterAdminResponse{}, err
+	}
+	input.Password = hashedPassword
+
+	err = s.repository.RegisterAdmin(input)
+	if err != nil {
+		return RegisterAdminResponse{}, err
+	}
+
+	return RegisterAdminResponse{
+		Message: "Admin registered successfully",
 	}, nil
 }
