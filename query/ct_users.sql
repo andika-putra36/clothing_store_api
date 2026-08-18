@@ -1,4 +1,3 @@
-
 CREATE TABLE users(
 	id SERIAL PRIMARY KEY
 	, role_id INT NOT NULL UNIQUE REFERENCES roles(id)
