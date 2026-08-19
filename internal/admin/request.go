@@ -9,7 +9,7 @@ type InsertProductRequest struct {
 }
 
 type UpdateProductRequest struct {
-	ID                int     `json:"id" binding:"required"`
+	// ID                int     `json:"id" binding:"required"`
 	Name              string  `json:"name" binding:"required"`
 	Description       string  `json:"description" binding:"required"`
 	Price             float64 `json:"price" binding:"required"`
@@ -17,6 +17,6 @@ type UpdateProductRequest struct {
 	IsAvailable       *bool   `json:"is_available" binding:"required"`
 }
 
-type DeleteProductRequest struct {
-	ID int `json:"id" binding:"required"`
-}
+// type DeleteProductRequest struct {
+// 	ID int `json:"id" binding:"required"`
+// }

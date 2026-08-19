@@ -3,6 +3,9 @@ package admin
 import "gorm.io/gorm"
 
 type Repository interface {
+	InsertProduct(input InsertProductRequest) error
+	UpdateProduct(id int, input UpdateProductRequest) error
+	DeleteProduct(id int) error
 }
 
 type repository struct {
@@ -28,10 +31,10 @@ func (r *repository) InsertProduct(input InsertProductRequest) error {
 	return nil
 }
 
-func (r *repository) UpdateProduct(input UpdateProductRequest) error {
+func (r *repository) UpdateProduct(id int, input UpdateProductRequest) error {
 	err := r.db.Exec(
 		`CALL update_product(?, ?, ?, ?, ?, ?)`,
-		input.ID,
+		id,
 		input.Name,
 		input.Description,
 		input.Price,
@@ -44,10 +47,10 @@ func (r *repository) UpdateProduct(input UpdateProductRequest) error {
 	return nil
 }
 
-func (r *repository) DeleteProduct(input DeleteProductRequest) error {
+func (r *repository) DeleteProduct(id int) error {
 	err := r.db.Exec(
 		`CALL delete_product(?)`,
-		input.ID,
+		id,
 	).Error
 	if err != nil {
 		return err
