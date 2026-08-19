@@ -5,6 +5,7 @@ CREATE TABLE products(
 	, description TEXT
 	, price NUMERIC(12,2) NOT NULL DEFAULT 0
 	, is_available BOOLEAN DEFAULT TRUE
+	, is_delete BOOLEAN DEFAULT FALSE
 	, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 	, updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
