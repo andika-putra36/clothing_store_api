@@ -1,4 +1,4 @@
-package admin
+package product
 
 import "gorm.io/gorm"
 
@@ -6,6 +6,8 @@ type Repository interface {
 	InsertProduct(input InsertProductRequest) error
 	UpdateProduct(id int, input UpdateProductRequest) error
 	DeleteProduct(id int) error
+	GetProducts() ([]GetProductsResponse, error)
+	GetProduct(id int) (GetProductResponse, error)
 }
 
 type repository struct {
@@ -56,4 +58,29 @@ func (r *repository) DeleteProduct(id int) error {
 		return err
 	}
 	return nil
+}
+
+func (r *repository) GetProducts() ([]GetProductsResponse, error) {
+	var response []GetProductsResponse
+
+	err := r.db.Raw(
+		`SELECT * FROM get_products()`,
+	).Scan(&response).Error
+	if err != nil {
+		return response, err
+	}
+	return response, nil
+}
+
+func (r *repository) GetProduct(id int) (GetProductResponse, error) {
+	var response GetProductResponse
+
+	err := r.db.Raw(
+		`SELECT * FROM get_product(?)`,
+		id,
+	).Scan(&response).Error
+	if err != nil {
+		return response, err
+	}
+	return response, nil
 }

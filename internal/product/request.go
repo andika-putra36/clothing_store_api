@@ -1,4 +1,4 @@
-package admin
+package product
 
 type InsertProductRequest struct {
 	Name              string  `json:"name" binding:"required"`
@@ -16,7 +16,3 @@ type UpdateProductRequest struct {
 	ProductCategoryID int     `json:"product_category_id" binding:"required"`
 	IsAvailable       *bool   `json:"is_available" binding:"required"`
 }
-
-// type DeleteProductRequest struct {
-// 	ID int `json:"id" binding:"required"`
-// }

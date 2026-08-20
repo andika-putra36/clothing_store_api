@@ -1,4 +1,4 @@
-package admin
+package product
 
 import (
 	"errors"
@@ -97,5 +97,41 @@ func (h *handler) DeleteProduct(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "product is deleted successfully!",
+	})
+}
+
+func (h *handler) GetProducts(c *gin.Context) {
+	response, err := h.service.GetProducts()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"data": response,
+	})
+}
+
+func (h *handler) GetProduct(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid id",
+		})
+		return
+	}
+
+	response, err := h.service.GetProduct(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"data": response,
 	})
 }

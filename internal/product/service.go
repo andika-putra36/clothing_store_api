@@ -1,9 +1,11 @@
-package admin
+package product
 
 type Service interface {
 	InsertProduct(input InsertProductRequest) error
 	UpdateProduct(id int, input UpdateProductRequest) error
 	DeleteProduct(id int) error
+	GetProducts() ([]GetProductsResponse, error)
+	GetProduct(id int) (GetProductResponse, error)
 }
 
 type service struct {
@@ -24,4 +26,12 @@ func (s *service) UpdateProduct(id int, input UpdateProductRequest) error {
 
 func (s *service) DeleteProduct(id int) error {
 	return s.repository.DeleteProduct(id)
+}
+
+func (s *service) GetProducts() ([]GetProductsResponse, error) {
+	return s.repository.GetProducts()
+}
+
+func (s *service) GetProduct(id int) (GetProductResponse, error) {
+	return s.repository.GetProduct(id)
 }

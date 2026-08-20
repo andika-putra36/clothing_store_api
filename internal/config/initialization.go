@@ -1,8 +1,8 @@
 package config
 
 import (
-	"clothing_store_api/internal/admin"
 	"clothing_store_api/internal/auth"
+	"clothing_store_api/internal/product"
 	"fmt"
 	"log"
 	"os"
@@ -17,21 +17,21 @@ func InitializeEverything() *gin.Engine {
 	db := initializeDB()
 	// Declaring repository
 	authRepository := auth.NewRepository(db)
-	adminRepository := admin.NewRepository(db)
+	productRepository := product.NewRepository(db)
 
 	//Declaring service
 	authService := auth.NewService(authRepository)
-	adminService := admin.NewService(adminRepository)
+	productService := product.NewService(productRepository)
 
 	//Declaring handler
 	authHandler := auth.NewHandler(authService)
-	adminHandler := admin.NewHandler(adminService)
+	productHandler := product.NewHandler(productService)
 
 	router := gin.Default()
 	v1 := router.Group("api/v1")
 
 	auth.RegisterRoutes(v1, *authHandler)
-	admin.RegisterRoutes(v1, *adminHandler)
+	product.RegisterRoutes(v1, *productHandler)
 	return router
 }
 
