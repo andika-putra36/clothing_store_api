@@ -12,7 +12,7 @@ RETURNS TABLE(
 )
 AS $$
 	SELECT
-		COALESCE(SUM(products.price), 0) AS subtotal
+		COALESCE(SUM(products.price), 0)
 		, 5000
 		, COALESCE((SUM(products.price) + 5000), 0)
 	FROM 
