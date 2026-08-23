@@ -7,15 +7,19 @@ type GetLoginCredentialResponse struct {
 	RoleID       int    `json:"role_id"`
 	Email        string `json:"email"`
 	PasswordHash string `json:"password_hash"`
+	CustomerID   int    `json:"customer_id"`
+	AdminID      int    `json:"admin_id"`
 }
 
 type GetRefreshTokenResponse struct {
-	ID        int       `json:"id"`
-	UserID    int       `json:"user_id"`
-	Email     string    `json:"email"`
-	RoleID    int       `json:"role_id"`
-	Token     string    `json:"token"`
-	ExpiredAt time.Time `json:"expired_at"`
+	ID         int       `json:"id"`
+	UserID     int       `json:"user_id"`
+	Email      string    `json:"email"`
+	RoleID     int       `json:"role_id"`
+	Token      string    `json:"token"`
+	ExpiredAt  time.Time `json:"expired_at"`
+	CustomerID int       `json:"customer_id"`
+	AdminID    int       `json:"admin_id"`
 }
 
 type LoginResponse struct {
@@ -34,9 +38,11 @@ type RefreshTokenResponse struct {
 }
 
 type User struct {
-	UserID int    `json:"user_id"`
-	RoleID int    `json:"role_id"`
-	Email  string `json:"email"`
+	UserID     int    `json:"user_id"`
+	RoleID     int    `json:"role_id"`
+	Email      string `json:"email"`
+	CustomerID int    `json:"customer_id"`
+	AdminID    int    `json:"admin_id"`
 }
 
 type RegisterCustomerResponse struct {

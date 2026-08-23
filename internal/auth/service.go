@@ -39,7 +39,7 @@ func (s *service) LogIn(input LoginRequest) (LoginResponse, error) {
 	}
 
 	// Generate access token
-	accessToken, err := jwt.GenerateAccessToken(loginCredential.UserID, loginCredential.Email, loginCredential.RoleID)
+	accessToken, err := jwt.GenerateAccessToken(loginCredential.UserID, loginCredential.Email, loginCredential.RoleID, loginCredential.CustomerID, loginCredential.AdminID)
 	if err != nil {
 		return LoginResponse{}, err
 	}
@@ -69,9 +69,11 @@ func (s *service) LogIn(input LoginRequest) (LoginResponse, error) {
 			RefreshToken: refreshToken,
 		},
 		User: User{
-			UserID: loginCredential.UserID,
-			RoleID: loginCredential.RoleID,
-			Email:  loginCredential.Email,
+			UserID:     loginCredential.UserID,
+			RoleID:     loginCredential.RoleID,
+			Email:      loginCredential.Email,
+			CustomerID: loginCredential.CustomerID,
+			AdminID:    loginCredential.AdminID,
 		},
 	}, nil
 }
@@ -86,7 +88,7 @@ func (s *service) RefreshToken(input RefreshTokenRequest) (RefreshTokenResponse,
 		return RefreshTokenResponse{}, errors.New("Refresh token expired")
 	}
 
-	accessToken, err := jwt.GenerateAccessToken(tokenData.UserID, tokenData.Email, tokenData.RoleID)
+	accessToken, err := jwt.GenerateAccessToken(tokenData.UserID, tokenData.Email, tokenData.RoleID, tokenData.CustomerID, tokenData.AdminID)
 	if err != nil {
 		return RefreshTokenResponse{}, err
 	}

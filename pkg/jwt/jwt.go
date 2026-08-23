@@ -7,21 +7,35 @@ import (
 	"os"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 )
 
 type Claims struct {
-	UserID int
-	Email  string
-	RoleID int
+	UserID     int
+	Email      string
+	RoleID     int
+	CustomerID int
+	AdminID    int
 	jwt.RegisteredClaims
 }
 
-func GenerateAccessToken(userID int, email string, roleID int) (string, error) {
+func GetClaims(c *gin.Context) (*Claims, bool) {
+	value, exists := c.Get("claims")
+	if !exists {
+		return nil, false
+	}
+	claims, ok := value.(*Claims)
+	return claims, ok
+}
+
+func GenerateAccessToken(userID int, email string, roleID int, customerID int, adminID int) (string, error) {
 	claims := Claims{
-		UserID: userID,
-		Email:  email,
-		RoleID: roleID,
+		UserID:     userID,
+		Email:      email,
+		RoleID:     roleID,
+		CustomerID: customerID,
+		AdminID:    adminID,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().UTC().Add(15 * time.Minute)),
 		},

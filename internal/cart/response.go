@@ -14,3 +14,8 @@ type GetCartPricingResponse struct {
 	ApplicationFee float64 `json:"application_fee"`
 	Total          float64 `json:"total"`
 }
+
+type GetCartResponse struct {
+	Pricing  GetCartPricingResponse    `json:"pricing"`
+	Products []GetCartProductsResponse `json:"products"`
+}
