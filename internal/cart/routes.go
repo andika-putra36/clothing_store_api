@@ -7,11 +7,11 @@ import (
 )
 
 func RegisterRoutes(router *gin.RouterGroup, h handler) {
-	// router.POST("/cart", h.InsertToCart)
-
 	protected := router.Group("/")
 	protected.Use(middleware.AuthMiddleware())
 	{
 		protected.POST("/cart", h.InsertToCart)
+		protected.DELETE("/cart/:id", h.DeleteFromCart)
+		protected.GET("/cart", h.GetCart)
 	}
 }

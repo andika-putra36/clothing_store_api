@@ -1,5 +1,5 @@
 /*
-	SELECT * FROM get_cart_products(1)
+	SELECT * FROM get_cart_products(2)
 */
 
 CREATE OR REPLACE FUNCTION get_cart_products(
@@ -28,6 +28,7 @@ AS $$
 		LEFT JOIN product_categories 
 			ON product_categories.id = products.product_category_id
 	WHERE
-		products.is_available = true
-		AND products.is_delete = false;
+		carts.customer_id 			= p_customer_id
+		AND products.is_available 	= true
+		AND products.is_delete 		= false;
 $$ LANGUAGE sql

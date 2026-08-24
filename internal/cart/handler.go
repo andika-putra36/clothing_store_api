@@ -2,7 +2,9 @@ package cart
 
 import (
 	"clothing_store_api/pkg/jwt"
+	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -44,5 +46,59 @@ func (h *handler) InsertToCart(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "product is added to cart successfully!",
+	})
+}
+
+func (h *handler) DeleteFromCart(c *gin.Context) {
+	claims, ok := jwt.GetClaims(c)
+	if !ok {
+		c.JSON(401, gin.H{
+			"error": "unauthorized",
+		})
+		return
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid id",
+		})
+		return
+	}
+
+	err = h.service.DeleteFromCart(claims.CustomerID, id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "product is deleted from cart successfully!",
+	})
+}
+
+func (h *handler) GetCart(c *gin.Context) {
+	claims, ok := jwt.GetClaims(c)
+	fmt.Println("DEBUG claims:", claims, "ok:", ok)
+	if !ok {
+		c.JSON(401, gin.H{
+			"error": "unauthorized",
+		})
+		return
+	}
+
+	response, err := h.service.GetCart(claims.CustomerID)
+	fmt.Println("DEBUG service result:", response, "err:", err)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"data": response,
 	})
 }

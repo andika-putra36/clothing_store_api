@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type Repository interface {
 	InsertToCart(customer_id int, input InsertToCartRequest) error
-	DeleteFromCart(customer_id int, input DeleteFromCartRequest) error
+	DeleteFromCart(customer_id int, product_id int) error
 	GetCartProducts(customer_id int) ([]GetCartProductsResponse, error)
 	GetCartPricing(customer_id int) (GetCartPricingResponse, error)
 }
@@ -29,11 +29,11 @@ func (r *repository) InsertToCart(customer_id int, input InsertToCartRequest) er
 	return nil
 }
 
-func (r *repository) DeleteFromCart(customer_id int, input DeleteFromCartRequest) error {
+func (r *repository) DeleteFromCart(customer_id int, product_id int) error {
 	err := r.db.Exec(
 		`CALL delete_from_cart(?, ?)`,
 		customer_id,
-		input.ProductID,
+		product_id,
 	).Error
 	if err != nil {
 		return err

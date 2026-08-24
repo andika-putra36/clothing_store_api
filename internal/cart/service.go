@@ -2,7 +2,7 @@ package cart
 
 type Service interface {
 	InsertToCart(customer_id int, input InsertToCartRequest) error
-	DeleteFromCart(customer_id int, input DeleteFromCartRequest) error
+	DeleteFromCart(customer_id int, product_id int) error
 	GetCart(customer_id int) (GetCartResponse, error)
 }
 
@@ -18,8 +18,8 @@ func (s *service) InsertToCart(customer_id int, input InsertToCartRequest) error
 	return s.repository.InsertToCart(customer_id, input)
 }
 
-func (s *service) DeleteFromCart(customer_id int, input DeleteFromCartRequest) error {
-	return s.repository.DeleteFromCart(customer_id, input)
+func (s *service) DeleteFromCart(customer_id int, product_id int) error {
+	return s.repository.DeleteFromCart(customer_id, product_id)
 }
 
 func (s *service) GetCart(customer_id int) (GetCartResponse, error) {
