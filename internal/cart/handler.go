@@ -2,7 +2,6 @@ package cart
 
 import (
 	"clothing_store_api/pkg/jwt"
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -81,7 +80,6 @@ func (h *handler) DeleteFromCart(c *gin.Context) {
 
 func (h *handler) GetCart(c *gin.Context) {
 	claims, ok := jwt.GetClaims(c)
-	fmt.Println("DEBUG claims:", claims, "ok:", ok)
 	if !ok {
 		c.JSON(401, gin.H{
 			"error": "unauthorized",
@@ -90,7 +88,6 @@ func (h *handler) GetCart(c *gin.Context) {
 	}
 
 	response, err := h.service.GetCart(claims.CustomerID)
-	fmt.Println("DEBUG service result:", response, "err:", err)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
