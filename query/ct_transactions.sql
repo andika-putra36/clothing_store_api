@@ -1,6 +1,7 @@
 CREATE TABLE transactions(
 	id SERIAL PRIMARY KEY
 	, transaction_status_id INT NOT NULL REFERENCES transaction_statuses(id)
+	, customer_id INT NOT NULL REFERENCES customers(id)
 	, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 	, accepted_at TIMESTAMPTZ
 	, completed_at TIMESTAMPTZ
