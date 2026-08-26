@@ -2,10 +2,10 @@ CREATE OR REPLACE FUNCTION get_transaction_products(
 	p_transaction_id INT
 )
 RETURNS TABLE(
-	product_id 				INT
-	, product_name 			VARCHAR(255)
-	, product_description	TEXT
-	, product_price 		NUMERIC(12, 2)
+	id 				INT
+	, name 			VARCHAR(255)
+	, description	TEXT
+	, price 		NUMERIC(12, 2)
 )
 AS $$
 	SELECT

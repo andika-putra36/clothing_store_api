@@ -1,6 +1,7 @@
 /*
 	CALL insert_transaction(
-		ARRAY[1, 4]
+		2
+		, ARRAY[1, 4]
 		, ARRAY['Basic Shirt', 'Basic Pants']
 		, ARRAY['This is an exclusive sample of basic shirt on clothing store', 'This is an exclusive sample of basic pants on clothing store']
 		, ARRAY[100000.00, 80000.00]
