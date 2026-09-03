@@ -5,7 +5,6 @@ import (
 )
 
 func RegisterRoutes(router *gin.RouterGroup, h handler) {
-
 	public := router.Group("/")
 	{
 		public.POST("/auth/login", h.LogIn)
